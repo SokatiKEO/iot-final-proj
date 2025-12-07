@@ -54,11 +54,13 @@ services:
     networks:
       - smartbin-network
 
-  # Telegraf - MQTT to InfluxDB Bridge
   telegraf:
     image: telegraf:1.28
     container_name: smartbin-telegraf
     restart: unless-stopped
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-your_bot_token_here}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID:-your_chat_id_here}
     volumes:
       - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
     depends_on:
